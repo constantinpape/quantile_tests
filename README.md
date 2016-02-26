@@ -14,9 +14,10 @@ Results with the initial parameters for the accumulators:
 * Boost: Cache Size 1000
 * Vigra: Auto-Range Histogram with 10 bins 
 
-** NValues = 10, NReps = 1000 **
+**NValues = 10, NReps = 1000**
 
 Unsorted input
+
 |       | Diff - Vigra  | Diff - Boost right    | Diff - Boost left     |        
 |-------|--------------:|----------------------:|----------------------:|
 | Q-0.1 | -267.0        | 91.2                  | -820.9                |
@@ -26,6 +27,7 @@ Unsorted input
 | Q-0.9 | 54.9          | 805.9                 | -89.5                 |
 
 Sorted in ascendig order
+
 |       | Diff - Vigra  | Diff - Boost right    | Diff - Boost left     |        
 |-------|--------------:|----------------------:|----------------------:|
 | Q-0.1 | -238.7        | 86.3                  | -776.5                |
@@ -35,6 +37,7 @@ Sorted in ascendig order
 | Q-0.9 | 59.8          | 823.0                 | -91.4                 |
 
 Sorted in descendig order
+
 |       | Diff - Vigra  | Diff - Boost right    | Diff - Boost left     |        
 |-------|--------------:|----------------------:|----------------------:|
 | Q-0.1 | -265.2        | 90.6                  | -815.3                |
@@ -49,9 +52,10 @@ Boost right overestimates all but the 0.25-quantile, Boost right does exactly th
 None of the methods is affected by ordering of the inpuy data.
 Overall, the vigra results are more accurate. (All three show systematic errors).
 
-** NValues = 100, NReps = 1000 **
+**NValues = 100, NReps = 1000**
 
 Unsorted input
+
 |       | Diff - Vigra  | Diff - Boost right    | Diff - Boost left     |        
 |-------|--------------:|----------------------:|----------------------:|
 | Q-0.1 | -26.7         | 9.9                   | -88.8                 |
@@ -61,6 +65,7 @@ Unsorted input
 | Q-0.9 | 20.1          | 87.3                  | -9.7                  |
 
 Sorted in ascendig order
+
 |       | Diff - Vigra  | Diff - Boost right    | Diff - Boost left     |        
 |-------|--------------:|----------------------:|----------------------:|
 | Q-0.1 | -35.3         | 10.4                  | -93.4                 |
@@ -70,6 +75,7 @@ Sorted in ascendig order
 | Q-0.9 | 29.2          | 88.4                  | -9.8                  |
 
 Sorted in descendig order
+
 |       | Diff - Vigra  | Diff - Boost right    | Diff - Boost left     |        
 |-------|--------------:|----------------------:|----------------------:|
 | Q-0.1 | -28.3         | 10.0                  | -90.2                 |
@@ -83,9 +89,10 @@ However the systematics of errors does not change (Apart from the fact that Boos
 Again overall vigra performs best and the ordering is irrelevant for all three methods.
 
 
-** NValues = 1000, NReps = 1000 **
+**NValues = 1000, NReps = 1000**
 
 Unsorted input
+
 |       | Diff - Vigra  | Diff - Boost right    | Diff - Boost left     |        
 |-------|--------------:|----------------------:|----------------------:|
 | Q-0.1 | -4.9          | 1.0                   | -8.8                  |
@@ -98,9 +105,10 @@ All methods are pretty accurate, same systematics of the errors as before.
 I don't report the sorted results, because again there is no difference.
 
 
-** NValues = 10000, NReps = 1000 **
+**NValues = 10000, NReps = 1000**
 
 Unsorted input
+
 |       | Diff - Vigra  | Diff - Boost right    | Diff - Boost left     |        
 |-------|--------------:|----------------------:|----------------------:|
 | Q-0.1 | -0.7          | 3998.9                | 3998.9                |
@@ -131,7 +139,7 @@ sqrt yields best results. Ceil because otherwise bincount too small for small N)
 
 Comparison with bins fixed to 10:
 
-** NValues = 10, NReps = 10000 **
+**NValues = 10, NReps = 10000**
 
 |       | Diff - Fixed  | Diff - Adaptive       |        
 |-------|--------------:|----------------------:|
@@ -141,7 +149,7 @@ Comparison with bins fixed to 10:
 | Q-0.75| 215.0         | -14.6                 |
 | Q-0.9 | 65.1          | -41.6                 |
 
-** NValues = 100, NReps = 10000 **
+**NValues = 100, NReps = 10000**
 
 |       | Diff - Fixed  | Diff - Adaptive       |        
 |-------|--------------:|----------------------:|
@@ -151,7 +159,7 @@ Comparison with bins fixed to 10:
 | Q-0.75|  27.4         | 19.4                  |
 | Q-0.9 |  28.0         | 2.6                   |
 
-** NValues = 1000, NReps = 10000 **
+**NValues = 1000, NReps = 10000**
 
 |       | Diff - Fixed  | Diff - Adaptive       |        
 |-------|--------------:|----------------------:|
@@ -162,7 +170,7 @@ Comparison with bins fixed to 10:
 | Q-0.9 | 3.4           | 2.6                   |
 
 
-** NValues = 10000, NReps = 10000 **
+**NValues = 10000, NReps = 10000**
 
 |       | Diff - Fixed  | Diff - Adaptive       |        
 |-------|--------------:|----------------------:|
