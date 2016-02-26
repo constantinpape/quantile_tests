@@ -1,5 +1,9 @@
+#pragma once
+
 #include <vector>
 #include <algorithm>
+#include <cmath>
+#include <cassert>
 #include <iostream>
 
 #include <vigra/multi_array.hxx>
@@ -8,6 +12,7 @@ template<class T>
 std::vector<T> exactQuantiles(const vigra::MultiArray<1,T> & values)
 {
     size_t size = static_cast<size_t>( values.shape(0) );
+    double eps = 1.e-5;
     
     // we copy to a vector to sort
     std::vector<T> values_sorted(size);
@@ -16,34 +21,36 @@ std::vector<T> exactQuantiles(const vigra::MultiArray<1,T> & values)
     // I hope sort likes vigra multi arrays...
     std::sort( values_sorted.begin(), values_sorted.end() );
 
-    // TODO are all these ternarys correct?
-    // get 0.1 quantile
-    size_t index1 = size / 10;
-    T q1  = (size % 2 == 0) ? (values_sorted[index1] + values_sorted[index1+1])/2. : values_sorted[index1]; 
+    // initialize the correct quantilte positions
+    std::vector<double> quantiles{ { 0.1, 0.25, 0.5, 0.75, 0.9 } };     
+    std::vector<T> res( quantiles.size() );
+    for( size_t i = 0; i < quantiles.size(); i++ )
+    {
+        // declare the resulting quantile
+        T quant_res;
+        // exact quantile position
+        double quant = quantiles[i];
+        // here we chose n - 1, because we regard n datapoints,
+        // seperated by n - 1 delimiters.
+        // cf. np.percentile(interpolation = 'linear')
+        double pos   = quant * (size - 1);
+        // check whether the position is integral or decimal
+        if( pos == std::floor(pos)) // if true integral and we are at exact quantile
+        {
+            size_t q_index = static_cast<size_t>( std::floor(pos) );
+            quant_res = values_sorted.at(q_index);
+        }
+        else // if false decimal and we have to interpolate
+        {
+            // calculate the interpolated quantile
+            size_t lower_index = static_cast<size_t>( std::floor(pos) );
+            size_t upper_index = lower_index + 1;
+            double part = pos - lower_index;
+            quant_res = values_sorted.at(lower_index);
+            quant_res += part * ( values_sorted.at(upper_index) -  values_sorted.at(lower_index) ); 
+        }
+        res[i] = quant_res;
+    }
     
-    // get 0.25 quantile
-    size_t index25 = size / 4;
-    T q25  = (size % 2 == 0) ? (values_sorted[index25] + values_sorted[index25+1])/2. : values_sorted[index25]; 
-    
-    // get the 0.5 quantile / median
-    size_t index5 = size / 2;
-    T q5  = (size % 2 == 0) ? (values_sorted[index5] + values_sorted[index5+1])/2. : values_sorted[index5]; 
-    
-    // get the 0.75 quantile
-    size_t index75 = 3 * size / 4;
-    T q75  = (size % 2 == 0) ? (values_sorted[index75] + values_sorted[index75+1])/2. : values_sorted[index75]; 
-
-    // get the 0.9 quantile
-    size_t index9 = 9 * size / 10;
-    T q9  = (size % 2 == 0) ? (values_sorted[index9] + values_sorted[index9+1])/2. : values_sorted[index9]; 
-
-    std::vector<T> res(5);
-
-    res[0] = q1;
-    res[1] = q25;
-    res[2] = q5;
-    res[3] = q75;
-    res[4] = q9;
-
     return res;
 }

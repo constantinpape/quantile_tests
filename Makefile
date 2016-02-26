@@ -20,3 +20,5 @@ prefix := .
 test_quantiles: $(prefix)/test_quantiles.cpp
 	$(CC) $(ALL_FLAGS) -o $(prefix)/$@ $^ 
 
+test_exact: $(prefix)/test_exact.cpp
+	$(CC) $(ALL_FLAGS) -o $(prefix)/$@ $^
